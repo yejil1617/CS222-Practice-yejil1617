@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const colors = require("colors");
 const connectDB = require("./config/db");
+const errorHandler = require("./middleware/error");
 
 // Load config files
 dotenv.config({ path: "./config/config.env" });
@@ -26,7 +27,9 @@ if (process.env.NODE_ENV === "development") {
 // Mount rothers
 app.use("/api/v1/bootcamps", bootcamps);
 
-const PORT = process.env.PORT || 4800;
+app.use(errorHandler);
+
+const PORT = process.env.PORT || 4500;
 
 const server = app.listen(
   PORT,
